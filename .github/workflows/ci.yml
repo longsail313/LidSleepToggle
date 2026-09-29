@@ -1,0 +1,22 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test-and-package:
+    runs-on: macos-14
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run tests
+        run: make test
+      - name: Package app
+        run: ./Scripts/package-app.sh
+      - name: Upload app archive
+        uses: actions/upload-artifact@v4
+        with:
+          name: LidSleepToggle
+          path: |
+            dist/LidSleepToggle.zip
+            dist/LidSleepToggle.zip.sha256
